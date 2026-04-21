@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDBJ Submission Workflow Map</title>
+    <style>
+        :root {
+            /* DDBJ Orange Pallet */
+            --ddbj-orange: #F57C00;       /* メインオレンジ（ヘッダー、ラベル） */
+            --ddbj-orange-dark: #E65100;  /* 濃いオレンジ（タイトル） */
+            --ddbj-orange-light: #FFB74D; /* 薄いオレンジ（ボーダー、アクセント） */
+            --ddbj-orange-pale: #FFF3E0;  /* 非常に薄いオレンジ（背景） */
+            
+            /* Gray Pallet */
+            --ddbj-gray-dark: #212121;    /* 濃いグレー（本文テキスト） */
+            --ddbj-gray: #757575;         /* 中グレー（サブテキスト、パス） */
+            --ddbj-gray-light: #EEEEEE;   /* 薄いグレー（全体の背景） */
+            
+            /* Common Mapping */
+            --bg-color: var(--ddbj-gray-light);
+            --text-color: var(--ddbj-gray-dark);
+            --card-bg: #FFFFFF;
+        }
+
+        body { font-family: "Helvetica Neue", Arial, sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; color: var(--text-color); }
+        .wrapper { max-width: 1200px; margin: auto; }
+        
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { color: var(--ddbj-orange); } /* タイトルをオレンジに */
+        header p { color: var(--ddbj-gray); }   /* サブタイトルを中グレーに */
+        
+        /* フローのセクション構造 */
+        .flow-container { display: flex; flex-direction: column; gap: 40px; }
+        .flow-row { display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: start; }
+        
+        /* ステップラベルをDDBJオレンジに */
+        .step-label { background: var(--ddbj-orange); color: white; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; position: sticky; top: 20px; }
+        
+        /* カードのデザイン */
+        .card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
+        .card { background: var(--card-bg); border: 1px solid #ddd; border-top: 4px solid var(--ddbj-orange); border-radius: 10px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
+        
+        /* カードタイトルを濃いオレンジに */
+        .card h3 { margin: 0 0 10px 0; font-size: 1rem; border-bottom: 1px solid var(--ddbj-gray-light); padding-bottom: 5px; color: var(--ddbj-orange-dark); }
+        .path { font-size: 0.75rem; color: var(--ddbj-gray); margin-bottom: 10px; font-weight: bold; } /* パスを中グレーに */
+        .desc { font-size: 0.85rem; margin-bottom: 15px; line-height: 1.4; color: var(--text-color); } /* 説明文を濃いグレーに */
+
+        /* ゴールバッジをオレンジ系に */
+        .goal-box { background: var(--ddbj-orange-pale); border: 1px dashed var(--ddbj-orange-light); color: var(--ddbj-orange-dark); padding: 10px; border-radius: 6px; font-weight: bold; text-align: center; font-size: 0.9rem; }
+        
+        /* NEXT STEPの矢印を薄オレンジに */
+        .arrow-indicator { text-align: center; color: var(--ddbj-orange-light); font-size: 1.5rem; margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <header>
+        <h1>DDBJ 登録ナビゲーション・マップ</h1>
+        <p>データの種類と条件から、適切な登録システムを確認してください。</p>
+    </header>
+
+    <div class="flow-container">
+        
+        <div class="flow-row">
+            <div class="step-label">1. ヒト対象か？</div>
+            <div class="card-container">
+                <div class="card"> <div>
+                        <div class="path">q1: はい (アクセス制限あり)</div>
+                        <h3>JGA (ヒトデータ)</h3>
+                        <p class="desc">制限が必要な遺伝型・表現型データは、NBDCへの提供申請を経てJGAへ登録します。</p>
+                    </div>
+                    <div class="goal-box">GOAL: JGA</div>
+                </div>
+                <div class="card">
+                    <div>
+                        <div class="path">q1: いいえ</div>
+                        <h3>非ヒト / 制限なしデータ</h3>
+                        <p class="desc">以下の生物種やデータ種別ごとのフローに進みます。</p>
+                    </div>
+                    <div class="arrow-indicator">NEXT STEP ▼</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-row">
+            <div class="step-label">2. オミックス・他</div>
+            <div class="card-container">
+                <div class="card"> <div>
+                        <div class="path">q2: 転写産物 (RNA-seq)</div>
+                        <h3>GEA + DRA</h3>
+                        <p class="desc">遺伝子発現データは、生リードをDRAに、発現情報をGEAに登録します。</p>
+                    </div>
+                    <div class="goal-box">GOAL: BP/BS/DRA/GEA</div>
+                </div>
+                <div class="card"> <div>
+                        <div class="path">q2: メタボロミクス</div>
+                        <h3>MetaboBank</h3>
+                        <p class="desc">メタボロミクスデータ専用のDBです。</p>
+                    </div>
+                    <div class="goal-box">GOAL: MetaboBank</div>
+                </div>
+                <div class="card"> <div>
+                        <div class="path">q2: プロテオミクス</div>
+                        <h3>jPOST</h3>
+                        <p class="desc">プロテオミクスデータ専用のDBです。</p>
+                    </div>
+                    <div class="goal-box">GOAL: jPOST</div>
+                </div>
+                <div class="card"> <div>
+                        <div class="path">q2: バリアント (ヒト短変異)</div>
+                        <h3>JVar (JSNP)</h3>
+                        <p class="desc">50bp以下のヒトの短いバリアントを登録します。</p>
+                    </div>
+                    <div class="goal-box">GOAL: JVar (JSNP)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-row">
+            <div class="step-label">3. ゲノム・規模別</div>
+            <div class="card-container">
+                <div class="card"> <div>
+                        <div class="path">q3: 真核・原核 ＞ 生リード＋アセンブリ</div>
+                        <h3>DRA + MSS</h3>
+                        <p class="desc">NGSの生データとアセンブルしたゲノム配列の両方を登録します。</p>
+                    </div>
+                    <div class="goal-box">GOAL: BP/BS/DRA/MSS</div>
+                </div>
+                <div class="card"> <div>
+                        <div class="path">q4: プラスミド/ウイルス ＞ 小規模</div>
+                        <h3>NSSS (Web登録)</h3>
+                        <p class="desc">100配列以下かつ500kb以下の小規模な配列はNSSSから登録します。</p>
+                    </div>
+                    <div class="goal-box">GOAL: NSSS</div>
+                </div>
+                <div class="card"> <div>
+                        <div class="path">q4: プラスミド/ウイルス ＞ 大規模</div>
+                        <h3>MSS (大量登録)</h3>
+                        <p class="desc">100配列超または500kb超の配列はMSS（大量登録システム）を使用します。</p>
+                    </div>
+                    <div class="goal-box">GOAL: MSS</div>
+                </div>
+                <div class="card"> <div>
+                        <div class="path">q3: メタゲノム (MAG)</div>
+                        <h3>BioProject + MSS</h3>
+                        <p class="desc">高品質なメタゲノムアセンブリ配列(MAG)の登録先です。</p>
+                    </div>
+                    <div class="goal-box">GOAL: BP/BS/MSS</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
